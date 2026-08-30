@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Proveedores{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Módulo de Proveedores</h2>
+<a href="{{ url_for('nuevo_proveedor') }}" class="btn btn-success mb-3">+ Nuevo Proveedor</a>
+
+<div class="row">
+    {% for prov in proveedores %}
+    <div class="col-md-4 mb-3">
+        <div class="card border-primary shadow-sm h-100">
+            <div class="card-header bg-primary text-white font-weight-bold">
+                {{ prov.empresa }}
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Contacto:</strong> {{ prov.contacto }}</p>
+                <p class="card-text"><strong>Ciudad:</strong> {{ prov.ciudad }}</p>
+                <p class="card-text"><strong>Teléfono:</strong> {{ prov.telefono }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
