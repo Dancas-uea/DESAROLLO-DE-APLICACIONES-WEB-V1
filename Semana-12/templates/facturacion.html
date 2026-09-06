@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Facturación{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Módulo de Facturación</h2>
+<a href="{{ url_for('nueva_factura') }}" class="btn btn-success mb-3">+ Nueva Factura</a>
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Factura: {{ factura.numero }}</h4>
+        <span class="badge bg-info text-dark">Fecha: {{ factura.fecha }}</span>
+    </div>
+    <div class="card-body">
+        <p class="fs-5"><strong>Cliente:</strong> {{ factura.cliente }}</p>
+
+        <h5 class="mt-4">Detalle de Compras</h5>
+        <table class="table table-bordered mt-2">
+            <thead class="table-light">
+                <tr>
+                    <th>Descripción</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-end">Precio Unitario</th>
+                    <th class="text-end">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in factura.detalles %}
+                <tr>
+                    <td>{{ item.descripcion }}</td>
+                    <td class="text-center">{{ item.cantidad }}</td>
+                    <td class="text-end">${{ "%.2f"|format(item.precio_unitario) }}</td>
+                    <td class="text-end">${{ "%.2f"|format(item.cantidad * item.precio_unitario) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="row justify-content-end mt-3">
+            <div class="col-md-4">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Subtotal:</span> <strong>${{ "%.2f"|format(factura.subtotal) }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>IVA (12%):</span> <strong>${{ "%.2f"|format(factura.iva) }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-light fs-5">
+                        <span>Total:</span> <strong class="text-primary">${{ "%.2f"|format(factura.total) }}</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            {% if factura.pagada %}
+                <div class="alert alert-success mb-0" role="alert">
+                    <strong>Estado de Pago:</strong> Factura Cancelada / Pagada.
+                </div>
+            {% else %}
+                <div class="alert alert-warning mb-0" role="alert">
+                    <strong>Estado de Pago:</strong> Pendiente de Pago.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
