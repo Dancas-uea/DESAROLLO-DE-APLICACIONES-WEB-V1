@@ -1,18 +1,33 @@
-# Proyecto Integrador U3 - Avance 11/16
-## Desarrollo de Aplicaciones Web - Semana 11
+# Proyecto Final - Desarrollo de Aplicaciones Web
+## Sistema de Gestión Integral - AsmoRoot
 
 ### Descripción del Proyecto
-Este proyecto corresponde al avance de la Semana 11 de la asignatura Desarrollo de Aplicaciones Web. En esta etapa se incorporaron formularios web con validación del lado del servidor utilizando **Flask-WTF** y **WTForms**, organizados en una carpeta `forms` separada por módulo. Se implementó protección CSRF, validación de campos obligatorios, mensajes de error y procesamiento condicional de datos.
+Este proyecto corresponde al Proyecto Final de la asignatura Desarrollo de Aplicaciones Web. El sistema es una aplicación web completa desarrollada con Flask que integra autenticación de usuarios, operaciones CRUD completas y persistencia de datos mediante SQLite. El sistema permite gestionar productos, clientes, proveedores y facturación desde una interfaz web responsiva construida con Bootstrap.
+
+---
+
+### Tecnologías Utilizadas
+- Python 3.14
+- Flask 3.0.0
+- Flask-WTF
+- WTForms
+- SQLite3
+- Jinja2
+- Bootstrap 5.3
+- HTML5 / CSS3 / JavaScript
 
 ---
 
 ### Estructura del Proyecto
 ```text
-Semana-11/
+Proyecto Final/
 │
 ├── app.py
 ├── requirements.txt
 ├── README.md
+│
+├── data/
+│   └── ferreteria.db
 │
 ├── forms/
 │   ├── __init__.py
@@ -24,6 +39,7 @@ Semana-11/
 ├── templates/
 │   ├── base.html
 │   ├── index.html
+│   ├── login.html
 │   ├── productos.html
 │   ├── formulario_producto.html
 │   ├── clientes.html
@@ -47,53 +63,93 @@ Semana-11/
 
 ---
 
-### Tecnologías Utilizadas
-- Python 3.14
-- Flask 3.0.00
-- Flask-WTF
-- WTForms
-- Jinja2
-- Bootstrap 5.3
+### Funcionalidades Implementadas
+
+#### Autenticación
+- Login con usuario y contraseña
+- Protección de rutas mediante sesiones Flask
+- Logout con cierre de sesión
+- Redirección automática al login si no hay sesión activa
+
+#### CRUD Completo - Productos
+- Crear nuevo producto
+- Listar todos los productos
+- Editar producto existente
+- Eliminar producto
+
+#### CRUD Completo - Clientes
+- Crear nuevo cliente
+- Listar todos los clientes
+- Editar cliente existente
+- Eliminar cliente
+
+#### CRUD Completo - Proveedores
+- Crear nuevo proveedor
+- Listar todos los proveedores
+- Editar proveedor existente
+- Eliminar proveedor
+
+#### Facturación
+- Visualización de facturas
+- Formulario de nueva factura con validación
 
 ---
 
-### Nuevas Funcionalidades - Semana 11
-- Carpeta `forms/` con clases de formulario por módulo
-- Formularios que heredan de `FlaskForm`
-- Validadores `DataRequired()`, `Length()`, `Email()`, `NumberRange()`
-- Protección CSRF mediante `form.hidden_tag()` y `SECRET_KEY`
-- Rutas con métodos GET y POST
-- Validación con `form.validate_on_submit()`
-- Mensajes de error por campo en rojo
-- Mensajes flash de éxito tras registro exitoso
-- Almacenamiento temporal en listas de Python (sin base de datos)
+### Base de Datos SQLite
+El sistema utiliza una base de datos local `ferreteria.db` con las siguientes tablas relacionadas:
+
+| Tabla | Campos |
+|-------|--------|
+| usuarios | id, username, password |
+| productos | id, nombre, categoria, precio, stock |
+| clientes | id, nombre, email, telefono, activo |
+| proveedores | id, empresa, contacto, telefono, ciudad |
 
 ---
 
 ### Rutas Disponibles
+
 | Ruta | Método | Descripción |
 |------|--------|-------------|
+| `/login` | GET / POST | Inicio de sesión |
+| `/logout` | GET | Cerrar sesión |
 | `/` | GET | Página principal |
 | `/productos` | GET | Listado de productos |
-| `/productos/nuevo` | GET / POST | Formulario de nuevo producto |
+| `/productos/nuevo` | GET / POST | Crear producto |
+| `/productos/editar/<id>` | GET / POST | Editar producto |
+| `/productos/eliminar/<id>` | GET | Eliminar producto |
 | `/clientes` | GET | Listado de clientes |
-| `/clientes/nuevo` | GET / POST | Formulario de nuevo cliente |
+| `/clientes/nuevo` | GET / POST | Crear cliente |
+| `/clientes/editar/<id>` | GET / POST | Editar cliente |
+| `/clientes/eliminar/<id>` | GET | Eliminar cliente |
 | `/proveedores` | GET | Listado de proveedores |
-| `/proveedores/nuevo` | GET / POST | Formulario de nuevo proveedor |
+| `/proveedores/nuevo` | GET / POST | Crear proveedor |
+| `/proveedores/editar/<id>` | GET / POST | Editar proveedor |
+| `/proveedores/eliminar/<id>` | GET | Eliminar proveedor |
 | `/facturacion` | GET | Módulo de facturación |
-| `/facturacion/nueva` | GET / POST | Formulario de nueva factura |
+| `/facturacion/nueva` | GET / POST | Nueva factura |
+
+---
+
+### Credenciales de Acceso
+| Usuario | Contraseña |
+|---------|------------|
+| admin | admin123 |
 
 ---
 
 ### Cómo ejecutar el proyecto
 ```bash
-# Activar entorno virtual
+# 1. Navegar a la carpeta del proyecto
+cd "Proyecto Final"
+
+# 2. Activar el entorno virtual
 venv\Scripts\activate
 
-# Instalar dependencias
+# 3. Instalar dependencias
 py -m pip install -r requirements.txt
 
-# Ejecutar la aplicación
+# 4. Ejecutar la aplicación
 py app.py
 ```
 
@@ -102,6 +158,6 @@ Abrir en el navegador: `http://127.0.0.1:5000`
 ---
 
 ### Estudiante
-**Carlos Daniel Castillo Cabrera**  
-Desarrollo de Aplicaciones Web  
+**Carlos Daniel Castillo Cabrera**
+Desarrollo de Aplicaciones Web
 Universidad Estatal Amazónica - 2026
